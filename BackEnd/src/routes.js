@@ -5,12 +5,13 @@ import multer from 'multer';
 import AddressController from './app/controllers/AddressController';
 import EntrepreneurialController from './app/controllers/EntrepreneurialController';
 import FileController from './app/controllers/FileController';
+import ProductController from './app/controllers/ProductController';
 import SessionEntrepreneurialController from './app/controllers/SessionEntrepreneurialController';
 import SessionUserController from './app/controllers/SessionUserController';
 import UserController from './app/controllers/UserController';
 import authMiddleware from './app/middlewares/auth';
-import authEntrepreneurialMiddleware from './app/middlewares/authEntrepreneurial';
-import authUserMiddleware from './app/middlewares/authUser';
+import authEntre from './app/middlewares/authEntrepreneurial';
+import authUser from './app/middlewares/authUser';
 import multerConfig from './config/multer';
 
 const routes = new Router();
@@ -35,25 +36,23 @@ routes.post(
 );
 
 // Just Entrepreneurial
-routes.get(
-   '/entrepreneurial/',
-   authEntrepreneurialMiddleware,
-   EntrepreneurialController.index
+routes.get('/entrepreneurial/', authEntre, EntrepreneurialController.index);
+routes.put('/entrepreneurial/', authEntre, EntrepreneurialController.update);
+routes.delete('/entrepreneurial/', authEntre, EntrepreneurialController.delete);
+
+routes.get('/product', authEntre, ProductController.index);
+routes.post(
+   '/product',
+   authEntre,
+   upload.single('file'),
+   ProductController.store
 );
-routes.put(
-   '/entrepreneurial/',
-   authEntrepreneurialMiddleware,
-   EntrepreneurialController.update
-);
-routes.delete(
-   '/entrepreneurial/',
-   authEntrepreneurialMiddleware,
-   EntrepreneurialController.delete
-);
+routes.put('/product/:id', authEntre, ProductController.update);
+routes.delete('/product/:id', authEntre, ProductController.delete);
 
 // Just Users
-routes.get('/user/', authUserMiddleware, UserController.index);
-routes.put('/user/', authUserMiddleware, UserController.update);
-routes.delete('/user/', authUserMiddleware, UserController.delete);
+routes.get('/user/', authUser, UserController.index);
+routes.put('/user/', authUser, UserController.update);
+routes.delete('/user/', authUser, UserController.delete);
 
 export default routes;
