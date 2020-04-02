@@ -25,6 +25,10 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: false,
          },
+         category: {
+            type: Sequelize.STRING,
+            allowNull: false,
+         },
          cell: {
             type: Sequelize.STRING,
             allowNull: false,

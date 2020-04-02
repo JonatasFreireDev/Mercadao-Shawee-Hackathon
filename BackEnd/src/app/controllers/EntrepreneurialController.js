@@ -12,13 +12,19 @@ class EntrepreneurialController {
 
       const entrepreneurial = await Entrepreneurial.findOne({
          where: { id: userId },
-         attributes: ['id', 'name', 'email', 'cnpj', 'cell'],
+         attributes: ['id', 'name', 'email', 'cnpj', 'category', 'cell'],
          include: [
             { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
             {
                model: Product,
                as: 'products',
-               attributes: ['id', 'name', 'price', 'amount'],
+               attributes: ['id', 'name', 'category', 'price', 'amount'],
+               include: [
+                  {
+                     model: File,
+                     attributes: ['id', 'path', 'url'],
+                  },
+               ],
             },
             {
                model: Address,
@@ -43,6 +49,7 @@ class EntrepreneurialController {
       const schema = Yup.object().shape({
          name: Yup.string().required(),
          email: Yup.string().email().required(),
+         category: Yup.string().required(),
          password: Yup.string().min(6).required(),
          cnpj: Yup.string().required(),
          cell: Yup.string().required(),
@@ -72,11 +79,16 @@ class EntrepreneurialController {
       }
 
       // Cria um novo Entrepreneurial
-      const { id, name, email, cnpj, cell } = await Entrepreneurial.create(
-         req.body
-      );
+      const {
+         id,
+         name,
+         email,
+         cnpj,
+         category,
+         cell,
+      } = await Entrepreneurial.create(req.body);
 
-      return res.json({ id, name, email, cnpj, cell });
+      return res.json({ id, name, email, cnpj, category, cell });
    }
 
    async update(req, res) {
@@ -149,13 +161,13 @@ class EntrepreneurialController {
 
       // Consulta os novos Dados
       const newEntrepreneurial = await Entrepreneurial.findByPk(req.userId, {
-         attributes: ['id', 'name', 'email', 'cnpj', 'cell'],
+         attributes: ['id', 'name', 'email', 'cnpj', 'category', 'cell'],
          include: [
             { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
             {
                model: Product,
                as: 'products',
-               attributes: ['id', 'name', 'price', 'amount'],
+               attributes: ['id', 'name', 'category', 'price', 'amount'],
             },
             {
                model: Address,
@@ -177,7 +189,7 @@ class EntrepreneurialController {
    }
 
    async delete(req, res) {
-      const entrepreneurial = await Entrepreneurial.findByPk(req.params.id);
+      const entrepreneurial = await Entrepreneurial.findByPk(req.userId);
 
       if (!entrepreneurial) {
          return res

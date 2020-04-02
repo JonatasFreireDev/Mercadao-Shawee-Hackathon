@@ -8,6 +8,7 @@ class Entrepreneurial extends Model {
             name: Sequelize.STRING,
             email: Sequelize.STRING,
             cnpj: Sequelize.STRING,
+            category: Sequelize.STRING,
             cell: Sequelize.STRING,
             password: Sequelize.VIRTUAL,
             password_hash: Sequelize.STRING,
@@ -35,6 +36,10 @@ class Entrepreneurial extends Model {
       this.hasMany(models.Product, {
          foreignKey: 'entrepreneurial_id',
          as: 'products',
+      });
+      this.hasMany(models.PurchaseOrder_Products, {
+         foreignKey: 'entrepreneurial_id',
+         as: 'entrepreneurial',
       });
       this.belongsTo(models.File, {
          foreignKey: 'avatar_id',

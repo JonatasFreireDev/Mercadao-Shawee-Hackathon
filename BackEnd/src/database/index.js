@@ -5,10 +5,19 @@ import Entrepreneurial from '../app/models/Entrepreneurial';
 import File from '../app/models/File';
 import Product from '../app/models/Product';
 import PurchaseOrder from '../app/models/PurchaseOrder';
+import PurchaseOrder_Products from '../app/models/PurchaseOrder_Products';
 import User from '../app/models/User';
 import configDatabase from '../config/database';
 
-const models = [Address, Entrepreneurial, File, Product, PurchaseOrder, User];
+const models = [
+   Address,
+   Entrepreneurial,
+   File,
+   Product,
+   PurchaseOrder,
+   User,
+   PurchaseOrder_Products,
+];
 
 class Database {
    constructor() {

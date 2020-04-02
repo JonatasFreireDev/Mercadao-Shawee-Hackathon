@@ -3,6 +3,7 @@ module.exports = {
       const user = await queryInterface.addColumn('address', 'user_id', {
          type: Sequelize.INTEGER,
          references: { model: 'user', key: 'id' },
+         allownull: true,
          onUpdate: 'CASCADE',
          onDelete: 'SET NULL',
       });
@@ -11,6 +12,7 @@ module.exports = {
          'entrepreneurial_id',
          {
             type: Sequelize.INTEGER,
+            allownull: true,
             references: { model: 'entrepreneurial', key: 'id' },
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',

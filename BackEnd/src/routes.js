@@ -6,6 +6,8 @@ import AddressController from './app/controllers/AddressController';
 import EntrepreneurialController from './app/controllers/EntrepreneurialController';
 import FileController from './app/controllers/FileController';
 import ProductController from './app/controllers/ProductController';
+import PurchaseOrderController from './app/controllers/PurchaseOrderController';
+import PurchaseOrderEntController from './app/controllers/PurchaseOrderEntController';
 import SessionEntrepreneurialController from './app/controllers/SessionEntrepreneurialController';
 import SessionUserController from './app/controllers/SessionUserController';
 import UserController from './app/controllers/UserController';
@@ -40,6 +42,17 @@ routes.get('/entrepreneurial/', authEntre, EntrepreneurialController.index);
 routes.put('/entrepreneurial/', authEntre, EntrepreneurialController.update);
 routes.delete('/entrepreneurial/', authEntre, EntrepreneurialController.delete);
 
+routes.get(
+   '/purchase-order/entrepreneurial',
+   authEntre,
+   PurchaseOrderEntController.index
+);
+routes.put(
+   '/purchase-order/entrepreneurial/:id',
+   authEntre,
+   PurchaseOrderEntController.update
+);
+
 routes.get('/product', authEntre, ProductController.index);
 routes.post(
    '/product',
@@ -54,5 +67,9 @@ routes.delete('/product/:id', authEntre, ProductController.delete);
 routes.get('/user/', authUser, UserController.index);
 routes.put('/user/', authUser, UserController.update);
 routes.delete('/user/', authUser, UserController.delete);
+
+routes.get('/purchase-order', authUser, PurchaseOrderController.index);
+routes.post('/purchase-order', authUser, PurchaseOrderController.store);
+routes.put('/purchase-order/:id', authUser, PurchaseOrderController.update);
 
 export default routes;
