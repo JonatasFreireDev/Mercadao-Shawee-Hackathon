@@ -51,7 +51,15 @@ class SessionEntrepreneurialControler {
          return res.status(401).json({ error: 'Password does not match' });
       }
 
-      const { id, name, cnpj, cell, avatar, Addresses } = entrepreneurial;
+      const {
+         id,
+         name,
+         cnpj,
+         cell,
+         avatar,
+         category,
+         Addresses,
+      } = entrepreneurial;
       return res.json({
          entrepreneurial: {
             id,
@@ -59,6 +67,7 @@ class SessionEntrepreneurialControler {
             cnpj,
             cell,
             email,
+            category,
             avatar,
             Addresses,
          },
