@@ -7,6 +7,7 @@ import Product from '../models/Product';
 import PurchaseOrder from '../models/PurchaseOrder';
 import PurchaseOrder_Products from '../models/PurchaseOrder_Products';
 import User from '../models/User';
+import Notification from '../schemas/Notification';
 
 class PurchaseOrderController {
    async index(req, res) {
@@ -147,7 +148,22 @@ class PurchaseOrderController {
                .json({ error: `Item ${product.name} does not exists` });
          }
 
+         if (product.qty > prod.amount) {
+            await savedOrder.update({
+               status: 'Canceled',
+            });
+            return res.status(400).json({
+               error: `Item ${product.name} have just ${prod.amount} products, verify your quantity`,
+            });
+         }
+
          await prod.update({ amount: prod.amount - product.qty });
+
+         await Notification.create({
+            content: `Voce vendeu ${product.qty} ${prod.name} !`,
+            user_id: prod.entrepreneurial_id,
+            type_user: 'entrepreneurial',
+         });
 
          const responseProducts = await PurchaseOrder_Products.create({
             entrepreneurial_id: prod.entrepreneurial_id,
@@ -263,6 +279,12 @@ class PurchaseOrderController {
       const promisse = productsOrder.map(async (prodOrder) => {
          const prom = await prodOrder.update({
             status: req.body.status,
+         });
+
+         await Notification.create({
+            content: `O usuario cancelou uma compra de um produto !`,
+            user_id: prodOrder.entrepreneurial_id,
+            type_user: 'entrepreneurial',
          });
 
          return prom;
