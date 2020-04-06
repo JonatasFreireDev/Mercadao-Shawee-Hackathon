@@ -46,7 +46,7 @@ Entre na pasta BackEnd, altere o nome do arquivo '.env.example' para '.env' e pr
 
 > MONGO_URL=mongodb://localhost:27017/mercadao
 
-Abra o postbird, conecte usando as variaveis indicadas acima, e crie um Banco com o nome de mercadao. Pronto, agora basta executar um comando e deixar ele executando:
+Abra o postbird, conecte usando as variaveis indicadas acima, e crie um Banco com o nome de mercadao. Pronto, agora basta executar os comandos na pasta backend e deixar ele executando:
 
 ```shell
 $ yarn dev
@@ -55,6 +55,7 @@ $ yarn dev
 Agora que nosso servidor esta executando, vamos abrir outro terminal na pasta frontend e executar o seguinte comando:
 
 ```shell
+$ yarn sequelize db:migrate
 $ yarn start
 ```
 
