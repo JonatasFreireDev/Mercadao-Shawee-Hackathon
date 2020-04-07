@@ -5,6 +5,7 @@ import multer from 'multer';
 import AddressController from './app/controllers/AddressController';
 import EntrepreneurialController from './app/controllers/EntrepreneurialController';
 import FileController from './app/controllers/FileController';
+import NotificationsController from './app/controllers/NotificationsController';
 import ProductController from './app/controllers/ProductController';
 import PurchaseOrderController from './app/controllers/PurchaseOrderController';
 import PurchaseOrderEntController from './app/controllers/PurchaseOrderEntController';
@@ -29,6 +30,9 @@ routes.post('/session/user', SessionUserController.store);
 routes.post('/address', authMiddleware, AddressController.store);
 routes.put('/address/:id', authMiddleware, AddressController.update);
 routes.delete('/address/:id', authMiddleware, AddressController.delete);
+
+routes.get('/notification', authMiddleware, NotificationsController.index);
+routes.put('/notification/:id', authMiddleware, NotificationsController.update);
 
 routes.post(
    '/files',
