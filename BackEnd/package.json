@@ -9,7 +9,7 @@
       "dev:debug": "nodemon --inspect src/server.js"
    },
    "dependencies": {
-      "axios": "^0.19.2",
+      "axios": "^0.21.1",
       "bcryptjs": "^2.4.3",
       "cep-promise": "^3.0.9",
       "date-fns": "^2.11.0",
